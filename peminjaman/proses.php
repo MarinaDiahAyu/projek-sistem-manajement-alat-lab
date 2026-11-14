@@ -1,3 +1,4 @@
+
 <?php
 include "../config/koneksi.php";
 
@@ -14,16 +15,21 @@ $alat = mysqli_fetch_array($queryAlat);
 
 if ($peminjam_id == "" || $alat_id == "" || $jumlah < 1 || $tanggal_pinjam == "" || $tanggal_kembali_rencana == "") {
     echo "Semua data harus diisi!";
+} else if (!$alat) {
+    echo "Data alat tidak ditemukan!";
 } else if ($jumlah > $alat['jumlah_tersedia']) {
     echo "Stok alat tidak mencukupi!";
 } else {
 
-    $kode_pinjam = "PJM" . date("YmdHis");
-
-    $queryPeminjaman = mysqli_query($connect, "INSERT INTO peminjaman(kode_pinjam, peminjam_id, tanggal_pinjam, tanggal_kembali_rencana, status) VALUES('$kode_pinjam', '$peminjam_id', '$tanggal_pinjam', '$tanggal_kembali_rencana', 'Dipinjam')");
+    $queryPeminjaman = mysqli_query($connect, "INSERT INTO peminjaman(kode_pinjam, peminjam_id, tanggal_pinjam, tanggal_kembali_rencana, status) VALUES('', '$peminjam_id', '$tanggal_pinjam', '$tanggal_kembali_rencana', 'Dipinjam')");
 
     if ($queryPeminjaman) {
         $peminjaman_id = mysqli_insert_id($connect);
+
+        $tahun = date("Y");
+        $kode_pinjam = "PJM-" . $tahun . "-" . str_pad($peminjaman_id, 3, "0", STR_PAD_LEFT);
+
+        mysqli_query($connect, "UPDATE peminjaman SET kode_pinjam = '$kode_pinjam' WHERE id = '$peminjaman_id'");
 
         $queryDetail = mysqli_query($connect, "INSERT INTO detail_peminjaman (peminjaman_id, alat_id, jumlah) VALUES ('$peminjaman_id', '$alat_id', '$jumlah')");
 
@@ -33,17 +39,11 @@ if ($peminjam_id == "" || $alat_id == "" || $jumlah < 1 || $tanggal_pinjam == ""
             echo "Peminjaman berhasil disimpan!";
             echo "<br><a href='index.php'>Lihat Data Peminjaman</a>";
 
-        }else{
+        } else {
             echo "Gagal menyimpan detail peminjaman: " . mysqli_error($connect);
         }
-    }else{
+    } else {
         echo "Gagal menyimpan peminjaman: " . mysqli_error($connect);
-
     }
 }
 ?>
-
-
-
-
-

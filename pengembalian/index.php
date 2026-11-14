@@ -1,18 +1,31 @@
+
 <?php
 include "../config/koneksi.php";
 
-echo "Koneksi berhasil!";
+$query = mysqli_query($connect, "
+    SELECT
+        peminjaman.*,
+        peminjam.nama,
+        alat.nama_alat,
+        detail_peminjaman.jumlah
+    FROM peminjaman
+    JOIN peminjam
+        ON peminjaman.peminjam_id = peminjam.id
+    JOIN detail_peminjaman
+        ON peminjaman.id = detail_peminjaman.peminjaman_id
+    JOIN alat
+        ON detail_peminjaman.alat_id = alat.id
+    WHERE peminjaman.status = 'Dipinjam'
+       OR peminjaman.status = 'Terlambat'
+");
 
-$query = mysqli_query($connect, "SELECT * FROM peminjaman");
-
-if(!$query){
-    die(mysqli_error($connect));
+if (!$query) {
+    die("Query gagal: " . mysqli_error($connect));
 }
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,7 +48,7 @@ if(!$query){
 
         <?php
         $no = 1;
-        while ($data = mysqli_fetch_array($query)){
+        while ($data = mysqli_fetch_array($query)) {
         ?>
 
         <tr>
@@ -51,6 +64,7 @@ if(!$query){
                 </a>
             </td>
         </tr>
+
         <?php } ?>
 
     </table>

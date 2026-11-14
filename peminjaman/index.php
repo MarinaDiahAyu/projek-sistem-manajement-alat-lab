@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +21,7 @@
             <th>Tanggal Pinjam</th>
             <th>Rencana Pengembalian</th>
             <th>Status</th>
+            <th>Aksi</th>
         </tr>
 
         <?php
@@ -29,7 +31,7 @@
 
         $no = 1;
 
-        while ($data = mysqli_fetch_array($query)){
+        while ($data = mysqli_fetch_array($query)) {
         ?>
 
         <tr>
@@ -39,11 +41,18 @@
             <td><?php echo $data['tanggal_pinjam']; ?></td>
             <td><?php echo $data['tanggal_kembali_rencana']; ?></td>
             <td><?php echo $data['status']; ?></td>
+            <td>
+                <a href="hapus.php?id=<?php echo $data['id']; ?>"
+                    onclick="return confirm('Yakin ingin menghapus peminjaman ini?')">
+                    Hapus
+                </a>
+            </td>
         </tr>
 
         <?php
         }
         ?>
     </table>
+
 </body>
 </html>

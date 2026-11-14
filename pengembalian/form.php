@@ -1,11 +1,15 @@
 <?php
 include "../config/koneksi.php";
 
-$id = $_GET['id'];
+$id = (int) $_GET['id'];
 
 $query = mysqli_query($connect, "SELECT peminjaman.*, peminjam.nama FROM peminjaman JOIN peminjam ON peminjaman.peminjam_id = peminjam.id WHERE peminjaman.id = '$id'");
 
 $data = mysqli_fetch_array($query);
+
+if(!$data){
+    die("Data peminjaman tidak ditemukan!");
+}
 ?>
 
 <!DOCTYPE html>
