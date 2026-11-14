@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include '../config/koneksi.php';
+include '../connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_stmt_fetch($query)) {
 
         // Memeriksa password hash
-        if (password_verify($password, $db_password)) {
+        if ($password == $db_password) {
 
             session_regenerate_id(true);
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             mysqli_stmt_close($query);
 
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit();
 
         }

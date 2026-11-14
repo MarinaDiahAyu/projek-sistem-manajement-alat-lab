@@ -22,21 +22,21 @@
             <a href="index.php">
                <div class="nav-label">Dasboard</div>
             </a>
-            <a href="">
+            <a href="alat/index.php">
                <div class="nav-label">Data Alat</div>
             </a>
             <a href="">
                 <div class="nav-label">Data Peminjam</div>
             </a>
             <div class="nav-label">Transaksi</div>
-            <a href="">
+            <a href="peminjaman/index.php">
                 <div class="nav-label">Peminjaman</div>
             </a>
-            <a href="">
-                <div class="nav-label">Peminjaman</div>
+            <a href="pengembalian/index.php">
+                <div class="nav-label">Pengembalian</div>
             </a>
             <div class="nav-label">Laporan</div>
-            <a href="">
+            <a href="laporan/index.php">
                 <div class="nav-label">Laporan</div>
             </a>
         </div>
