@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Mencari username di database
+    
     $query = mysqli_prepare($connect,
         "SELECT id, username, password, nama_lengkap
          FROM admin WHERE username = ?"
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (mysqli_stmt_fetch($query)) {
 
-        // Memeriksa password hash
+
         if ($password == $db_password) {
 
             session_regenerate_id(true);
