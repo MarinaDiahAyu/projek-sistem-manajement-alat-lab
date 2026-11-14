@@ -1,6 +1,6 @@
 
 <?php
-include '../config/koneksi.php';
+include "../config/koneksi.php";
 
 $query = mysqli_query($connect, "SELECT * FROM alat");
 

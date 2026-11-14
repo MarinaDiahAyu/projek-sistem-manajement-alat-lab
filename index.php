@@ -1,9 +1,8 @@
-
 <?php
 session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: login.php");
+    header("Location: login dan logout/login.php");
     exit();
 }
 ?>

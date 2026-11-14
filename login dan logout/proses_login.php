@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include '../connect.php';
+include '../config/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
