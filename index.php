@@ -2,10 +2,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit();
 }
+?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,6 @@ if (!isset($_SESSION['username'])) {
     
 </head>
 <body>
-    
+    <h1>selamat datang di SIMALAB</h1>
 </body>
 </html>
