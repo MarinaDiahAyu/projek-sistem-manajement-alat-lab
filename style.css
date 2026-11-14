@@ -1,0 +1,50 @@
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #030450;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    z-index: 1000;
+    transition: 0.2s ease;
+    overflow: hidden;
+}
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 16px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    min-height: 60px;
+    color:white;
+}
+.navbar {
+    flex: 1;
+    padding: 12px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: grey;
+}
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+.nav-label{
+    padding: 9px;
+}
+.btn-logout{
+    border: 2px solid gray;
+   text-align: center;
+   background-color: darkgrey;
+}
+.logo-icon{
+    font-size: 1.5rem;
+}
