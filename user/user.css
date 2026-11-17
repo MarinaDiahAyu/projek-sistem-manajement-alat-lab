@@ -1,0 +1,119 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f5f9;
+}
+
+/* SIDEBAR USER */
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #030450;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.sidebar-header p {
+    font-size: 13px;
+    color: #ccc;
+}
+
+.navbar {
+    flex: 1;
+    padding: 15px 0;
+}
+
+.navbar a {
+    display: block;
+    padding: 14px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background: #20216e;
+}
+
+.sidebar-footer {
+    padding: 20px;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 30px;
+}
+
+/* KARTU DASHBOARD */
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    width: 220px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.card h3 {
+    color: #030450;
+}
+
+.card p {
+    color: #666;
+    font-size: 14px;
+}
+
+.card a {
+    display: inline-block;
+    background: #030450;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+
+.welcome {
+    background: #030450;
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    margin-top: 0;
+}
+
+.welcome p {
+    color: #e0e0e0;
+}
+
+.main-content h2 {
+    color: #030450;
+    margin-bottom: 20px;
+}
+
+.card {
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
