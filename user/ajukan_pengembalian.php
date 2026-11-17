@@ -1,7 +1,9 @@
+
 <?php
 include '../config/koneksi.php';
 
 $id = (int) $_GET['id'];
+$berhasil = false;
 
 $query = mysqli_query($connect, "
     SELECT *
@@ -17,8 +19,7 @@ if (!$data) {
 }
 
 if (isset($_POST['submit'])) {
-    echo "Pengajuan pengembalian berhasil dikirim!";
-    echo "<br>Silakan tunggu Admin memproses pengembalian.";
+    $berhasil = true;
 }
 ?>
 
@@ -34,26 +35,39 @@ if (isset($_POST['submit'])) {
 <?php include 'sidebar.php'; ?>
 
 <main class="main-content">
-    <h1>Ajukan Pengembalian</h1>
 
-    <p>Kode Peminjaman:
-        <?php echo $data['kode_pinjam']; ?>
-    </p>
+    <?php if ($berhasil) { ?>
 
-    <p>Tanggal Rencana Kembali:
-        <?php echo $data['tanggal_kembali_rencana']; ?>
-    </p>
+        <h1>Pengajuan Pengembalian</h1>
+        <p>Pengajuan pengembalian berhasil dikirim!</p>
+        <p>Silakan tunggu Admin memproses pengembalian.</p>
+        <a href="pengembalian.php">Kembali ke Pengembalian</a>
 
-    <form method="POST">
+    <?php } else { ?>
+
+        <h1>Ajukan Pengembalian</h1>
+
+        <p>Kode Peminjaman:
+            <?php echo $data['kode_pinjam']; ?>
+        </p>
+
+        <p>Tanggal Rencana Kembali:
+            <?php echo $data['tanggal_kembali_rencana']; ?>
+        </p>
+
         <p>Apakah kamu yakin ingin mengajukan pengembalian alat ini?</p>
 
-        <button type="submit" name="submit">
-            Kirim Pengajuan
-        </button>
-    </form>
+        <form method="POST">
+            <button type="submit" name="submit">
+                Kirim Pengajuan
+            </button>
+        </form>
 
-    <br>
-    <a href="pengembalian.php">Kembali</a>
+        <br>
+        <a href="pengembalian.php">Kembali</a>
+
+    <?php } ?>
+
 </main>
 
 </body>
