@@ -45,19 +45,7 @@ mysqli_stmt_close($query);
 <div class="d-flex min-vh-100">
 
     <!-- Sidebar -->
-    <div class="bg-dark text-white p-3 flex-shrink-0" style="width: 230px;">
-        <h3 class="text-center mb-4">SIMALAB</h3>
-
-        <nav class="nav flex-column gap-2">
-            <a href="index.php" class="nav-link text-white">Dashboard</a>
-            <a href="alat.php" class="nav-link text-white">Data Alat</a>
-            <a href="peminjaman.php" class="nav-link text-white">Data Peminjaman</a>
-            <a href="pengembalian.php" class="nav-link text-white">Data Pengembalian</a>
-            <a href="laporan.php" class="nav-link text-white">Laporan</a>
-            <a href="profil.php" class="nav-link active bg-primary text-white rounded">Profil</a>
-            <a href="../auth/logout.php" class="nav-link text-white">Logout</a>
-        </nav>
-    </div>
+    <?php include 'sidebar.php'; ?>
 
     <!-- Konten -->
     <main class="flex-grow-1 p-4">

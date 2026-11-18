@@ -49,47 +49,7 @@ $dataKembali = mysqli_fetch_assoc($queryKembali);
 <body class="bg-light">
 
     <div class="d-flex min-vh-100">
-
-        <!-- Sidebar -->
-        <div class="bg-dark text-white p-3 flex-shrink-0" style="width: 230px;">
-
-            <h3 class="text-center mb-4">SIMALAB</h3>
-
-            <div class="nav flex-column gap-2">
-
-                <a href="index.php" class="nav-link text-white bg-secondary rounded">
-                    Dashboard
-                </a>
-
-                <a href="alat.php" class="nav-link text-white">
-                    Data Alat
-                </a>
-
-                <a href="peminjaman.php" class="nav-link text-white">
-                    Data Peminjaman
-                </a>
-
-                <a href="pengembalian.php" class="nav-link text-white">
-                    Data Pengembalian
-                </a>
-
-                <a href="laporan.php" class="nav-link text-white">
-                    Laporan
-                </a>
-
-                <a href="profil.php" class="nav-link text-white">
-                    Profil
-                </a>
-
-                <a href="../auth/logout.php"
-                   class="nav-link text-white"
-                   onclick="return confirm('Yakin ingin keluar?')">
-                    Logout
-                </a>
-
-            </div>
-        </div>
-
+        <?php include 'sidebar.php'; ?>
         <!-- Konten Utama -->
         <div class="flex-grow-1 p-4">
 

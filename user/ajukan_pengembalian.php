@@ -1,5 +1,11 @@
 <?php
+session_start();
 include '../config/koneksi.php';
+
+if (!isset($_SESSION['peminjam_id'])) {
+    header("Location: ../auth/login.php");
+    exit();
+}
 
 $id = (int) $_GET['id'];
 $berhasil = false;
