@@ -1,14 +1,43 @@
 
+/* =========================================
+   1. PENGATURAN UMUM
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f4f5f9;
+    background: #f4f5fa;
 }
 
-/* SIDEBAR USER */
+
+/* =========================================
+   2. LAYOUT UTAMA
+========================================= */
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    margin-left: 260px;
+    flex: 1;
+    min-width: 0;
+    padding: 32px;
+}
+
+
+/* =========================================
+   3. SIDEBAR
+========================================= */
+
 .sidebar {
     width: 260px;
-    min-height: 100vh;
+    height: 100vh;
     background: #030450;
     position: fixed;
     left: 0;
@@ -16,6 +45,8 @@ body {
     display: flex;
     flex-direction: column;
     color: white;
+    flex-shrink: 0;
+    z-index: 100;
 }
 
 .sidebar-header {
@@ -48,45 +79,10 @@ body {
     padding: 20px;
 }
 
-.main-content {
-    margin-left: 260px;
-    padding: 30px;
-}
 
-/* KARTU DASHBOARD */
-.dashboard-cards {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
-.card {
-    background: white;
-    padding: 22px;
-    width: 220px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-.card h3 {
-    color: #030450;
-}
-
-.card p {
-    color: #666;
-    font-size: 14px;
-}
-
-.card a {
-    display: inline-block;
-    background: #030450;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
+/* =========================================
+   4. DASHBOARD
+========================================= */
 
 .welcome {
     background: #030450;
@@ -109,159 +105,121 @@ body {
     margin-bottom: 20px;
 }
 
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
 .card {
-    transition: 0.2s;
+    background: white;
+    padding: 22px;
+    width: 220px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+
+.card h3 {
+    color: #030450;
+}
+
+.card p {
+    color: #666;
+    font-size: 14px;
+}
+
+.card a {
+    display: inline-block;
+    background: #030450;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.card a:hover {
+    background: #20216e;
+}
+
+
+/* =========================================
+   5. FORM
+========================================= */
+
 .form-card {
-  max-width: 520px;
-  background: #ffffff;
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 520px;
+    margin: 40px auto 25px;
+    padding: 32px;
+    background: #fff;
+    border-radius: 12px;
+    border-top: 5px solid #030450;
+    box-shadow: 0 4px 20px rgba(0, 0, 77, 0.1);
+}
+
+.form-title {
+    margin: 0 0 24px;
+    font-size: 26px;
+    color: #030450;
 }
 
 .form-card h3 {
-  margin: 0 0 16px;
-  font-size: 1.15rem;
-  color: #1d4ed8;
+    margin: 0 0 16px;
+    font-size: 1.15rem;
+    color: #030450;
 }
 
 .form-card h3:not(:first-child) {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid #e5e7eb;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
 }
 
-.form-group {
-  margin-bottom: 16px;
-  flex: 1;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #374151;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 12px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: #111827;
-  background: #f9fafb;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  background: #ffffff;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-}
-
-.form-row {
-  display: flex;
-  gap: 16px;
-}
-
-.btn-submit {
-  width: 100%;
-  margin-top: 8px;
-  padding: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  background: #2563eb;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-}
-
-.btn-submit:hover { background: #1d4ed8; }
-.btn-submit:active { transform: scale(0.98); }
-
-/* Pesan sukses / error */
-.pesan {
-  max-width: 520px;
-  margin-bottom: 16px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-}
-
-.pesan.sukses {
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #86efac;
-}
-
-.pesan.error {
-  background: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #fca5a5;
-}
-
-@media (max-width: 480px) {
-  .form-card { padding: 20px; }
-  .form-row { flex-direction: column; gap: 0; }
-}
-
-
-/* FORM AJUKAN PEMINJAMAN */
-.form-card {
-    max-width: 650px;
-    margin: 25px auto;
-    padding: 30px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-}
-
-.form-card h3 {
-    color: #030450;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.center {
+    text-align: center;
 }
 
 .form-group {
     margin-bottom: 18px;
+    flex: 1;
+    min-width: 0;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
-    color: #333;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
 }
 
 .form-group input,
 .form-group select {
+    display: block;
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    box-sizing: border-box;
     font-size: 14px;
+    font-family: inherit;
+    color: #111827;
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #030450;
+    background: #fff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 .form-row {
@@ -274,46 +232,207 @@ body {
     min-width: 0;
 }
 
+
+/* =========================================
+   6. TOMBOL FORM
+========================================= */
+
 .btn-submit {
     width: 100%;
+    margin-top: 8px;
     padding: 13px;
     background: #030450;
     color: white;
     border: none;
-    border-radius: 7px;
+    border-radius: 8px;
     font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
 }
 
 .btn-submit:hover {
     background: #20216e;
 }
 
-.pesan {
-    max-width: 650px;
-    margin: 15px auto;
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+.btn-primary,
+.btn-secondary {
+    flex: 1;
     padding: 12px;
-    border-radius: 7px;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #030450;
+    color: #fff;
+    border: 1px solid #030450;
+}
+
+.btn-primary:hover {
+    background: #12127a;
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #030450;
+    border: 1px solid #030450;
+}
+
+.btn-secondary:hover {
+    background: #f0f0fa;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+}
+
+
+/* =========================================
+   7. PESAN SUKSES DAN ERROR
+========================================= */
+
+.pesan {
+    width: 100%;
+    max-width: 520px;
+    margin: 15px auto;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
 }
 
 .pesan.sukses {
-    background: #d1fae5;
-    color: #065f46;
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
 }
 
 .pesan.error {
     background: #fee2e2;
     color: #991b1b;
+    border: 1px solid #fca5a5;
 }
 
-/* Tampilan HP */
+
+/* =========================================
+   8. HALAMAN KONFIRMASI SUKSES
+========================================= */
+
+.info-box {
+    background: #f4f5fa;
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    font-size: 15px;
+}
+
+.info-row + .info-row {
+    border-top: 1px solid #e1e3ef;
+}
+
+.info-label {
+    color: #6b6f85;
+}
+
+.info-value {
+    font-weight: 700;
+    color: #222;
+}
+
+.form-text {
+    margin: 0 0 24px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    background: #e6f6ec;
+    color: #1f9d55;
+    font-size: 34px;
+    line-height: 64px;
+    text-align: center;
+}
+
+
+/* =========================================
+   9. RESPONSIVE / TAMPILAN HP
+========================================= */
+
 @media (max-width: 600px) {
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        padding: 20px;
+    }
+
     .form-card {
         padding: 20px;
+        margin-top: 20px;
     }
 
     .form-row {
         flex-direction: column;
         gap: 0;
+    }
+
+    .dashboard-cards {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .sidebar {
+        width: 150px;
+    }
+
+    .main-content {
+        margin-left: 150px;
+        padding: 12px;
+    }
+
+    .sidebar-header,
+    .sidebar-footer {
+        padding: 12px;
+    }
+
+    .navbar a {
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .form-card {
+        padding: 15px;
     }
 }

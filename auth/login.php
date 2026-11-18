@@ -38,19 +38,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     mysqli_stmt_bind_result($query, $id, $nama, $nim, $db_password);
 
     if (mysqli_stmt_fetch($query)){
-        if (password_verify($password, $db_password)){
-            session_regenerate_id(true);
+    if (password_verify($password, $db_password) || $password === $db_password){
 
-            $_SESSION['peminjam_id'] = $id;
-            $_SESSION['nama'] = $nama;
-            $_SESSION['nim'] = $nim;
-            $_SESSION['role'] = 'user';
+        session_regenerate_id(true);
 
-            mysqli_stmt_close($query);
-            header("Location: ../user/index.php");
-            exit();
-        }
+        $_SESSION['peminjam_id'] = $id;
+        $_SESSION['nama'] = $nama;
+        $_SESSION['nim'] = $nim;
+        $_SESSION['role'] = 'user';
+
+        mysqli_stmt_close($query);
+
+        header("Location: ../user/index.php");
+        exit();
     }
+}
 
     mysqli_stmt_close($query);
     $error = "Username atau password salah.";

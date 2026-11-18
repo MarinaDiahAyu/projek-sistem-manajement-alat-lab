@@ -28,7 +28,7 @@ mysqli_stmt_close($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil User SIMALAB</title>
-
+    <link rel="stylesheet" href="user.css">
     <style>
         body {
             margin: 0;
@@ -36,30 +36,6 @@ mysqli_stmt_close($query);
             background: #f4f5f9;
         }
 
-        .sidebar {
-            width: 270px;
-            height: 100vh;
-            background: #08084f;
-            color: white;
-            position: fixed;
-            padding: 24px;
-            box-sizing: border-box;
-        }
-
-        .sidebar h2 {
-            margin-bottom: 20px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 15px 0;
-        }
-
-        .sidebar a:hover {
-            color: #aaaaff;
-        }
 
         .content {
             margin-left: 270px;

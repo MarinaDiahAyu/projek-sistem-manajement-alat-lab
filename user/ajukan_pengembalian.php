@@ -38,33 +38,39 @@ if (isset($_POST['submit'])) {
 
     <?php if ($berhasil) { ?>
 
-        <h1>Pengajuan Pengembalian</h1>
-        <p>Pengajuan pengembalian berhasil dikirim!</p>
-        <p>Silakan tunggu Admin memproses pengembalian.</p>
-        <a href="pengembalian.php">Kembali ke Pengembalian</a>
-
+        <div class="success-icon">✓</div>
+            <h1 class="form-title center">Pengajuan Terkirim</h1>
+            <p class="form-text center">
+                Pengajuan pengembalian berhasil dikirim.<br>
+                Silakan tunggu Admin memproses pengembalian.
+            </p>
+            <div class="form-actions">
+                <a href="pengembalian.php" class="btn-primary">Kembali ke Pengembalian</a>
+            </div>
     <?php } else { ?>
 
-        <h1>Ajukan Pengembalian</h1>
+          <h1 class="form-title">Ajukan Pengembalian</h1>
 
-        <p>Kode Peminjaman:
-            <?php echo $data['kode_pinjam']; ?>
-        </p>
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="info-label">Kode Peminjaman</span>
+                    <span class="info-value"><?php echo htmlspecialchars($data['kode_pinjam']); ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Tanggal Rencana Kembali</span>
+                    <span class="info-value"><?php echo htmlspecialchars($data['tanggal_kembali_rencana']); ?></span>
+                </div>
+            </div>
 
-        <p>Tanggal Rencana Kembali:
-            <?php echo $data['tanggal_kembali_rencana']; ?>
-        </p>
+            <p class="form-text">Apakah kamu yakin ingin mengajukan pengembalian alat ini?</p>
 
-        <p>Apakah kamu yakin ingin mengajukan pengembalian alat ini?</p>
+            <form method="POST">
+                <div class="form-actions">
+                    <a href="pengembalian.php" class="btn-secondary">Kembali</a>
+                    <button type="submit" name="submit" class="btn-primary">Kirim Pengajuan</button>
+                </div>
+            </form>
 
-        <form method="POST">
-            <button type="submit" name="submit">
-                Kirim Pengajuan
-            </button>
-        </form>
-
-        <br>
-        <a href="pengembalian.php">Kembali</a>
 
     <?php } ?>
 
