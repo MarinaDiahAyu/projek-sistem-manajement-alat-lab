@@ -69,8 +69,8 @@ SIMALAB adalah aplikasi web untuk mengelola peminjaman alat laboratorium. Peminj
 
 |   Peran  | Username | Password |
 |----------|----------|----------|
-| Admin    |   admin  | admin123 |
-| Peminjam | 123250212| Mar123   |
+| Admin    |  superadmin_baru  | lab2026 |
+| Peminjam | 123250901| 123456   |
 
 
 ## Struktur Folder
