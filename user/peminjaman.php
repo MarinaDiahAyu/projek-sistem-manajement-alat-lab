@@ -1,23 +1,26 @@
 <?php
 include '../config/koneksi.php';
 
+$pesan = "";
+$tipe  = "error";
+
 if (isset($_POST['submit'])) {
 
-    $nama = mysqli_real_escape_string($connect, $_POST['nama']);
-    $nim = mysqli_real_escape_string($connect, $_POST['nim']);
-    $kelas = mysqli_real_escape_string($connect, $_POST['kelas']);
-    $no_hp = mysqli_real_escape_string($connect, $_POST['no_hp']);
+    $nama   = mysqli_real_escape_string($connect, $_POST['nama']);
+    $nim    = mysqli_real_escape_string($connect, $_POST['nim']);
+    $kelas  = mysqli_real_escape_string($connect, $_POST['kelas']);
+    $no_hp  = mysqli_real_escape_string($connect, $_POST['no_hp']);
 
     $alat_id = (int) $_POST['alat_id'];
-    $jumlah = (int) $_POST['jumlah'];
+    $jumlah  = (int) $_POST['jumlah'];
 
-    $tanggal_pinjam = $_POST['tanggal_pinjam'];
+    $tanggal_pinjam  = $_POST['tanggal_pinjam'];
     $tanggal_kembali = $_POST['tanggal_kembali'];
 
     if ($jumlah < 1 || $alat_id < 1) {
-        echo "Pilihan alat atau jumlah tidak valid.";
+        $pesan = "Pilihan alat atau jumlah tidak valid.";
     } elseif ($tanggal_kembali < $tanggal_pinjam) {
-        echo "Tanggal kembali tidak boleh sebelum tanggal pinjam.";
+        $pesan = "Tanggal kembali tidak boleh sebelum tanggal pinjam.";
     } else {
 
         mysqli_begin_transaction($connect);
@@ -65,25 +68,26 @@ if (isset($_POST['submit'])) {
 
                     if ($query3) {
                         mysqli_commit($connect);
-                        echo "Pengajuan peminjaman berhasil!";
+                        $pesan = "Pengajuan peminjaman berhasil!";
+                        $tipe  = "sukses";
                     } else {
                         mysqli_rollback($connect);
-                        echo "Gagal menyimpan detail alat.";
+                        $pesan = "Gagal menyimpan detail alat.";
                     }
 
                 } else {
                     mysqli_rollback($connect);
-                    echo "Gagal menyimpan peminjaman.";
+                    $pesan = "Gagal menyimpan peminjaman.";
                 }
 
             } else {
                 mysqli_rollback($connect);
-                echo "Gagal menyimpan data peminjam.";
+                $pesan = "Gagal menyimpan data peminjam.";
             }
 
         } else {
             mysqli_rollback($connect);
-            echo "Stok alat tidak mencukupi atau alat tidak ditemukan.";
+            $pesan = "Stok alat tidak mencukupi atau alat tidak ditemukan.";
         }
     }
 }
@@ -92,6 +96,7 @@ if (isset($_POST['submit'])) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajukan Peminjaman</title>
     <link rel="stylesheet" href="user.css">
 </head>
@@ -103,58 +108,71 @@ if (isset($_POST['submit'])) {
 
     <h1>Ajukan Peminjaman Alat</h1>
 
-    <form method="POST">
+    <?php if ($pesan != "") { ?>
+        <div class="pesan <?php echo $tipe; ?>">
+            <?php echo htmlspecialchars($pesan); ?>
+        </div>
+    <?php } ?>
+
+    <form method="POST" class="form-card">
 
         <h3>Data Peminjam</h3>
 
-        Nama:<br>
-        <input type="text" name="nama" required>
-        <br><br>
+        <div class="form-group">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" required>
+        </div>
 
-        NIM:<br>
-        <input type="text" name="nim" required>
-        <br><br>
+        <div class="form-group">
+            <label for="nim">NIM</label>
+            <input type="text" id="nim" name="nim" required>
+        </div>
 
-        Kelas:<br>
-        <input type="text" name="kelas" required>
-        <br><br>
+        <div class="form-group">
+            <label for="kelas">Kelas</label>
+            <input type="text" id="kelas" name="kelas" required>
+        </div>
 
-        Nomor HP:<br>
-        <input type="text" name="no_hp" required>
-        <br><br>
+        <div class="form-group">
+            <label for="no_hp">Nomor HP</label>
+            <input type="text" id="no_hp" name="no_hp" required>
+        </div>
 
         <h3>Data Peminjaman</h3>
 
-        Pilih Alat:<br>
-        <select name="alat_id" required>
-            <option value="">-- Pilih Alat --</option>
+        <div class="form-group">
+            <label for="alat_id">Pilih Alat</label>
+            <select id="alat_id" name="alat_id" required>
+                <option value="">-- Pilih Alat --</option>
+                <?php
+                $alat = mysqli_query($connect, "SELECT * FROM alat WHERE jumlah_tersedia > 0");
+                while ($data = mysqli_fetch_array($alat)) {
+                ?>
+                    <option value="<?php echo $data['id']; ?>">
+                        <?php echo htmlspecialchars($data['nama_alat']); ?>
+                        (stok: <?php echo $data['jumlah_tersedia']; ?>)
+                    </option>
+                <?php } ?>
+            </select>
+        </div>
 
-            <?php
-            $alat = mysqli_query($connect, "SELECT * FROM alat WHERE jumlah_tersedia > 0");
+        <div class="form-group">
+            <label for="jumlah">Jumlah</label>
+            <input type="number" id="jumlah" name="jumlah" min="1" required>
+        </div>
 
-            while ($data = mysqli_fetch_array($alat)) {
-            ?>
-                <option value="<?php echo $data['id']; ?>">
-                    <?php echo $data['nama_alat']; ?>
-                </option>
-            <?php } ?>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="tanggal_pinjam">Tanggal Pinjam</label>
+                <input type="date" id="tanggal_pinjam" name="tanggal_pinjam" required>
+            </div>
+            <div class="form-group">
+                <label for="tanggal_kembali">Tanggal Rencana Kembali</label>
+                <input type="date" id="tanggal_kembali" name="tanggal_kembali" required>
+            </div>
+        </div>
 
-        </select>
-        <br><br>
-
-        Jumlah:<br>
-        <input type="number" name="jumlah" min="1" required>
-        <br><br>
-
-        Tanggal Pinjam:<br>
-        <input type="date" name="tanggal_pinjam" required>
-        <br><br>
-
-        Tanggal Rencana Kembali:<br>
-        <input type="date" name="tanggal_kembali" required>
-        <br><br>
-
-        <button type="submit" name="submit">Ajukan Peminjaman</button>
+        <button type="submit" name="submit" class="btn-submit">Ajukan Peminjaman</button>
 
     </form>
 </main>
