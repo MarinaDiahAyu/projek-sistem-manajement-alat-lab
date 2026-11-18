@@ -65,27 +65,35 @@ mysqli_stmt_close($query);
         <h2 class="fw-bold">Profil Admin</h2>
         <p class="text-muted">Informasi akun Administrator SIMALAB.</p>
 
-        <div class="card border-0 shadow-sm mt-4" style="max-width: 600px;">
+        <!-- Kartu Profil -->
+        <div class="card border-0 shadow-sm mt-4 w-100">
             <div class="card-body p-4">
 
                 <h4 class="mb-4">Data Admin</h4>
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Nama Lengkap</label>
-                    <input type="text" class="form-control"
-                        value="<?= htmlspecialchars($nama_lengkap); ?>" readonly>
-                </div>
+                <div class="row g-4">
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Username</label>
-                    <input type="text" class="form-control"
-                        value="<?= htmlspecialchars($username); ?>" readonly>
-                </div>
+                    <!-- Nama Lengkap -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Nama Lengkap</label>
+                        <input type="text" class="form-control"
+                            value="<?= htmlspecialchars($nama_lengkap); ?>" readonly>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Role</label>
-                    <input type="text" class="form-control"
-                        value="Administrator" readonly>
+                    <!-- Username -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Username</label>
+                        <input type="text" class="form-control"
+                            value="<?= htmlspecialchars($username); ?>" readonly>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Role</label>
+                        <input type="text" class="form-control"
+                            value="Administrator" readonly>
+                    </div>
+
                 </div>
 
             </div>

@@ -116,7 +116,7 @@ if (!$query) {
     <main class="flex-grow-1 p-4" style="min-width: 0;">
 
         <h2 class="fw-bold mb-1">Data Peminjaman</h2>
-        <p class="text-muted mb-4">Daftar seluruh peminjaman alat laboratorium.</p>
+        
 
         <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'hapus') { ?>
             <div class="alert alert-success alert-dismissible fade show">

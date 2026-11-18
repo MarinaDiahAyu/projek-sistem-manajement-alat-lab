@@ -1,9 +1,8 @@
-
 <?php
 session_start();
 include "../config/koneksi.php";
 
-// Memastikan yang membuka halaman adalah Admin
+// cek akses admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header("Location: ../auth/login.php");
     exit;
@@ -11,7 +10,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 
 $pesan = "";
 
-// Menambahkan alat baru
+// tambah alat
 if (isset($_POST['tambah'])) {
     $kode = $_POST['kode_alat'];
     $nama = $_POST['nama_alat'];
@@ -38,11 +37,11 @@ if (isset($_POST['tambah'])) {
         header("Location: alat.php?pesan=tambah");
         exit;
     } else {
-        $pesan = "Gagal menambahkan alat. Pastikan kode alat belum digunakan.";
+        $pesan = "alat gagal ditambahkan. cek kembali kode alatnya.";
     }
 }
 
-// Mengubah data alat
+// edit data alat 
 if (isset($_POST['edit'])) {
     $id = (int) $_POST['id'];
     $kode = $_POST['kode_alat'];
@@ -54,7 +53,7 @@ if (isset($_POST['edit'])) {
     $keterangan = $_POST['keterangan'];
 
     if ($tersedia > $total || $tersedia < 0 || $total < 0) {
-        $pesan = "Jumlah stok tidak valid.";
+        $pesan = "Jumlah stok tidak sesuai.";
     } else {
         $stmt = mysqli_prepare($connect, "
             UPDATE alat SET
@@ -78,7 +77,7 @@ if (isset($_POST['edit'])) {
             header("Location: alat.php?pesan=edit");
             exit;
         } else {
-            $pesan = "Gagal mengubah data alat.";
+            $pesan = "data alat gagal disimpan.";
         }
     }
 }

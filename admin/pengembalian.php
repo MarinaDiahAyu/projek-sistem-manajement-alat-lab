@@ -172,7 +172,7 @@ if (!$query) {
     <main class="flex-grow-1 p-4" style="min-width: 0;">
 
         <h2 class="fw-bold mb-1">Data Pengembalian Alat</h2>
-        <p class="text-muted mb-4">Kelola pengembalian alat laboratorium.</p>
+        
 
         <!-- Notifikasi -->
         <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'berhasil') { ?>

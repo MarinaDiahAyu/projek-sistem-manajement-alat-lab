@@ -219,3 +219,101 @@ body {
   .form-card { padding: 20px; }
   .form-row { flex-direction: column; gap: 0; }
 }
+
+
+/* FORM AJUKAN PEMINJAMAN */
+.form-card {
+    max-width: 650px;
+    margin: 25px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-card h3 {
+    color: #030450;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #030450;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background: #030450;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #20216e;
+}
+
+.pesan {
+    max-width: 650px;
+    margin: 15px auto;
+    padding: 12px;
+    border-radius: 7px;
+}
+
+.pesan.sukses {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.pesan.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Tampilan HP */
+@media (max-width: 600px) {
+    .form-card {
+        padding: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
