@@ -3,7 +3,7 @@
 session_start();
 include "../config/koneksi.php";
 
-// Cek hak akses Admin
+// memastikan yang membuka halaman adalah admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header("Location: ../auth/login.php");
     exit;
@@ -11,7 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 
 $pesan = "";
 
-// Proses tambah alat
+// menambahkan alat baru 
 if (isset($_POST['tambah'])) {
     $kode = $_POST['kode_alat'];
     $nama = $_POST['nama_alat'];
@@ -42,7 +42,7 @@ if (isset($_POST['tambah'])) {
     }
 }
 
-// Proses edit alat
+// mengubah data alat 
 if (isset($_POST['edit'])) {
     $id = (int) $_POST['id'];
     $kode = $_POST['kode_alat'];
@@ -83,7 +83,7 @@ if (isset($_POST['edit'])) {
     }
 }
 
-// Proses hapus alat
+// mengahapus data alat
 if (isset($_GET['hapus'])) {
     $id = (int) $_GET['hapus'];
 
