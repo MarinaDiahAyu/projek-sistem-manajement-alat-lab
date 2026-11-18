@@ -15,6 +15,6 @@
     </div>
 
     <div class="sidebar-footer">
-        <a href="../logout.php">Logout</a>
+        <a href="../auth/logout.php"  onclick="return confirm('Yakin ingin keluar?')">Logout</a>
     </div>
 </aside>
