@@ -1,3 +1,13 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
 .sidebar {
     width: 260px;
     min-height: 100vh;
@@ -5,11 +15,14 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    left: 0; top: 0; bottom: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
     z-index: 1000;
     transition: 0.2s ease;
     overflow: hidden;
 }
+
 .sidebar-header {
     display: flex;
     align-items: center;
@@ -17,8 +30,9 @@
     padding: 18px 16px;
     border-bottom: 1px solid rgba(255,255,255,.08);
     min-height: 60px;
-    color:white;
+    color: white;
 }
+
 .navbar {
     flex: 1;
     padding: 12px 0;
@@ -26,6 +40,7 @@
     overflow-x: hidden;
     color: grey;
 }
+
 .sidebar-footer {
     padding: 16px;
     border-top: 1px solid rgba(255,255,255,.08);
@@ -33,18 +48,42 @@
     flex-direction: column;
     gap: 10px;
 }
-a {
+
+.sidebar a {
     text-decoration: none;
     color: white;
 }
-.nav-label{
+
+.nav-label {
     padding: 9px;
 }
-.btn-logout{
+
+.btn-logout {
     border: 2px solid gray;
-   text-align: center;
-   background-color: darkgrey;
+    text-align: center;
+    background-color: darkgrey;
 }
-.logo-icon{
+
+.logo-icon {
     font-size: 1.5rem;
+}
+
+/*konten utama*/
+.main {
+    margin-left: 260px;
+    padding: 30px;
+    min-width: 0;
+}
+
+/* RESPONSIF */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+    }
+
+    .main {
+        margin-left: 0;
+    }
 }

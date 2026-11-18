@@ -20,7 +20,6 @@ $query = mysqli_prepare($connect, "
 
 mysqli_stmt_bind_param($query, "i", $id);
 mysqli_stmt_execute($query);
-
 mysqli_stmt_bind_result($query, $username, $nama_lengkap);
 
 if (!mysqli_stmt_fetch($query)) {
@@ -37,122 +36,62 @@ mysqli_stmt_close($query);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Admin - SIMALAB</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            margin: 0;
-            background: #f4f6f9;
-            display: flex;
-        }
-
-        .sidebar {
-            width: 230px;
-            min-height: 100vh;
-            background: #1e293b;
-            padding: 25px 15px;
-            color: white;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 13px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background: #334155;
-        }
-
-        .main {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .profile-box {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin-top: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .profile-box p {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .profile-box strong {
-            display: inline-block;
-            width: 150px;
-        }
-
-        @media (max-width: 800px) {
-            body {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                min-height: auto;
-            }
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
-<body>
+<body class="bg-light">
 
-<div class="sidebar">
-    <h2>SIMALAB</h2>
+<div class="d-flex min-vh-100">
 
-    <a href="index.php">Dashboard</a>
-    <a href="alat.php">Data Alat</a>
-    <a href="peminjaman.php">Data Peminjaman</a>
-    <a href="pengembalian.php">Data Pengembalian</a>
-    <a href="laporan.php">Laporan</a>
-    <a href="profil.php" class="active">Profil</a>
-    <a href="../auth/logout.php">Logout</a>
-</div>
+    <!-- Sidebar -->
+    <div class="bg-dark text-white p-3 flex-shrink-0" style="width: 230px;">
+        <h3 class="text-center mb-4">SIMALAB</h3>
 
-<div class="main">
-
-    <h1>Profil Admin</h1>
-    <p>Informasi akun Administrator SIMALAB.</p>
-
-    <div class="profile-box">
-
-        <h2>Data Admin</h2>
-
-        <p>
-            <strong>Nama Lengkap</strong>
-            <?php echo htmlspecialchars($nama_lengkap); ?>
-        </p>
-
-        <p>
-            <strong>Username</strong>
-            <?php echo htmlspecialchars($username); ?>
-        </p>
-
-        <p>
-            <strong>Role</strong>
-            Administrator
-        </p>
-
+        <nav class="nav flex-column gap-2">
+            <a href="index.php" class="nav-link text-white">Dashboard</a>
+            <a href="alat.php" class="nav-link text-white">Data Alat</a>
+            <a href="peminjaman.php" class="nav-link text-white">Data Peminjaman</a>
+            <a href="pengembalian.php" class="nav-link text-white">Data Pengembalian</a>
+            <a href="laporan.php" class="nav-link text-white">Laporan</a>
+            <a href="profil.php" class="nav-link active bg-primary text-white rounded">Profil</a>
+            <a href="../auth/logout.php" class="nav-link text-white">Logout</a>
+        </nav>
     </div>
 
+    <!-- Konten -->
+    <main class="flex-grow-1 p-4">
+
+        <h2 class="fw-bold">Profil Admin</h2>
+        <p class="text-muted">Informasi akun Administrator SIMALAB.</p>
+
+        <div class="card border-0 shadow-sm mt-4" style="max-width: 600px;">
+            <div class="card-body p-4">
+
+                <h4 class="mb-4">Data Admin</h4>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Lengkap</label>
+                    <input type="text" class="form-control"
+                        value="<?= htmlspecialchars($nama_lengkap); ?>" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Username</label>
+                    <input type="text" class="form-control"
+                        value="<?= htmlspecialchars($username); ?>" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Role</label>
+                    <input type="text" class="form-control"
+                        value="Administrator" readonly>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
 </div>
 
 </body>

@@ -3,7 +3,7 @@
 session_start();
 include "../config/koneksi.php";
 
-// memastikan yang membuka halaman adalah admin
+// Memastikan yang membuka halaman adalah Admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     header("Location: ../auth/login.php");
     exit;
@@ -11,7 +11,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
 
 $pesan = "";
 
-// menambahkan alat baru 
+// Menambahkan alat baru
 if (isset($_POST['tambah'])) {
     $kode = $_POST['kode_alat'];
     $nama = $_POST['nama_alat'];
@@ -42,7 +42,7 @@ if (isset($_POST['tambah'])) {
     }
 }
 
-// mengubah data alat 
+// Mengubah data alat
 if (isset($_POST['edit'])) {
     $id = (int) $_POST['id'];
     $kode = $_POST['kode_alat'];
@@ -83,7 +83,7 @@ if (isset($_POST['edit'])) {
     }
 }
 
-// mengahapus data alat
+// Menghapus data alat
 if (isset($_GET['hapus'])) {
     $id = (int) $_GET['hapus'];
 
@@ -147,289 +147,298 @@ if (isset($_GET['edit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Alat - SIMALAB</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        body {
-            margin: 0;
-            background: #f4f6f9;
-            display: flex;
-        }
-
-        .sidebar {
-            width: 230px;
-            min-height: 100vh;
-            background: #1e293b;
-            padding: 25px 15px;
-            color: white;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 13px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background: #334155;
-        }
-
-        .main {
-            flex: 1;
-            padding: 30px;
-            min-width: 0;
-        }
-
-        h1 {
-            color: #1e293b;
-        }
-
-        .form-box, .table-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background: #1e293b;
-            color: white;
-            border: none;
-            padding: 11px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .cancel {
-            color: #555;
-            margin-left: 10px;
-            text-decoration: none;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #e2e8f0;
-        }
-
-        .aksi a {
-            margin-right: 8px;
-        }
-
-        .pesan {
-            background: #e0f2fe;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        @media (max-width: 800px) {
-            body {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                min-height: auto;
-            }
-
-            .main {
-                overflow-x: auto;
-            }
-        }
-    </style>
+    <!-- CSS utama -->
+    <link rel="stylesheet" href="../style.css">
 </head>
 
-<body>
+<body class="bg-light">
 
-<div class="sidebar">
-    <h2>SIMALAB</h2>
+<div class="d-flex min-vh-100">
 
-    <a href="index.php">Dashboard</a>
-    <a href="alat.php" class="active">Data Alat</a>
-    <a href="peminjaman.php">Data Peminjaman</a>
-    <a href="pengembalian.php">Data Pengembalian</a>
-    <a href="laporan.php">Laporan</a>
-    <a href="profil.php">Profil</a>
-    <a href="../auth/logout.php">Logout</a>
+    <!-- Sidebar -->
+    <aside class="bg-dark text-white p-3 flex-shrink-0" style="width: 230px;">
+
+        <h3 class="text-center mb-4">SIMALAB</h3>
+
+        <nav class="nav flex-column gap-2">
+
+            <a href="index.php" class="nav-link text-white">
+                Dashboard
+            </a>
+
+            <a href="alat.php" class="nav-link text-white bg-secondary rounded">
+                Data Alat
+            </a>
+
+            <a href="peminjaman.php" class="nav-link text-white">
+                Data Peminjaman
+            </a>
+
+            <a href="pengembalian.php" class="nav-link text-white">
+                Data Pengembalian
+            </a>
+
+            <a href="laporan.php" class="nav-link text-white">
+                Laporan
+            </a>
+
+            <a href="profil.php" class="nav-link text-white">
+                Profil
+            </a>
+
+            <a href="../auth/logout.php"
+               class="nav-link text-white"
+               onclick="return confirm('Yakin ingin keluar?')">
+                Logout
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- Konten Utama -->
+    <main class="flex-grow-1 p-4" style="min-width: 0;">
+
+        <h2 class="fw-bold mb-4">Data Alat Laboratorium</h2>
+
+        <!-- Pesan Berhasil -->
+        <?php if (isset($_GET['pesan'])) { ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <?php
+                if ($_GET['pesan'] == 'tambah') echo "Alat berhasil ditambahkan!";
+                if ($_GET['pesan'] == 'edit') echo "Data alat berhasil diperbarui!";
+                if ($_GET['pesan'] == 'hapus') echo "Alat berhasil dihapus!";
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php } ?>
+
+        <!-- Pesan Kesalahan -->
+        <?php if ($pesan != "") { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?php echo htmlspecialchars($pesan); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php } ?>
+
+        <!-- Form Tambah dan Edit -->
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0">
+                    <?php echo $dataEdit ? "Edit Data Alat" : "Tambah Data Alat"; ?>
+                </h5>
+            </div>
+
+            <div class="card-body">
+
+                <form method="POST">
+
+                    <?php if ($dataEdit) { ?>
+                        <input type="hidden" name="id"
+                            value="<?php echo $dataEdit['id']; ?>">
+                    <?php } ?>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Kode Alat</label>
+                            <input type="text" name="kode_alat"
+                                class="form-control" required
+                                value="<?php echo htmlspecialchars($dataEdit['kode_alat'] ?? ''); ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Nama Alat</label>
+                            <input type="text" name="nama_alat"
+                                class="form-control" required
+                                value="<?php echo htmlspecialchars($dataEdit['nama_alat'] ?? ''); ?>">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Kategori</label>
+                            <select name="kategori_id" class="form-select" required>
+                                <option value="">Pilih Kategori</option>
+
+                                <?php
+                                mysqli_data_seek($queryKategori, 0);
+                                while ($kategori = mysqli_fetch_assoc($queryKategori)) {
+                                ?>
+                                    <option value="<?php echo $kategori['id']; ?>"
+                                        <?php
+                                        if ($dataEdit && $dataEdit['kategori_id'] == $kategori['id']) {
+                                            echo "selected";
+                                        }
+                                        ?>>
+                                        <?php echo htmlspecialchars($kategori['nama_kategori']); ?>
+                                    </option>
+                                <?php } ?>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Jumlah Total</label>
+                            <input type="number" name="jumlah_total"
+                                class="form-control" min="0" required
+                                value="<?php echo htmlspecialchars($dataEdit['jumlah_total'] ?? ''); ?>">
+                        </div>
+
+                        <?php if ($dataEdit) { ?>
+                            <div class="col-md-6">
+                                <label class="form-label">Jumlah Tersedia</label>
+                                <input type="number" name="jumlah_tersedia"
+                                    class="form-control" min="0" required
+                                    value="<?php echo $dataEdit['jumlah_tersedia']; ?>">
+                            </div>
+                        <?php } ?>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Kondisi</label>
+                            <select name="kondisi" class="form-select" required>
+
+                                <?php
+                                $kondisiPilihan = ['Baik', 'Rusak Ringan', 'Rusak Berat'];
+
+                                foreach ($kondisiPilihan as $kondisi) {
+                                    $selected = ($dataEdit && $dataEdit['kondisi'] == $kondisi)
+                                        ? 'selected' : '';
+                                    echo "<option value='$kondisi' $selected>$kondisi</option>";
+                                }
+                                ?>
+
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Keterangan</label>
+                            <textarea name="keterangan" class="form-control" rows="3"><?php
+                                echo htmlspecialchars($dataEdit['keterangan'] ?? '');
+                            ?></textarea>
+                        </div>
+
+                        <div class="col-12">
+
+                            <?php if ($dataEdit) { ?>
+
+                                <button type="submit" name="edit" class="btn btn-primary">
+                                    Simpan Perubahan
+                                </button>
+
+                                <a href="alat.php" class="btn btn-secondary">
+                                    Batal
+                                </a>
+
+                            <?php } else { ?>
+
+                                <button type="submit" name="tambah" class="btn btn-primary">
+                                    Tambah Alat
+                                </button>
+
+                            <?php } ?>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Tabel Daftar Alat -->
+        <div class="card border-0 shadow-sm">
+
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0">Daftar Alat</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Kode</th>
+                                <th>Nama Alat</th>
+                                <th>Kategori</th>
+                                <th>Stok Total</th>
+                                <th>Stok Tersedia</th>
+                                <th>Kondisi</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <?php
+                            $no = 1;
+
+                            while ($data = mysqli_fetch_assoc($queryAlat)) {
+                            ?>
+
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+
+                                    <td>
+                                        <?php echo htmlspecialchars($data['kode_alat']); ?>
+                                    </td>
+
+                                    <td>
+                                        <?php echo htmlspecialchars($data['nama_alat']); ?>
+                                    </td>
+
+                                    <td>
+                                        <?php echo htmlspecialchars($data['nama_kategori'] ?? '-'); ?>
+                                    </td>
+
+                                    <td><?php echo $data['jumlah_total']; ?></td>
+
+                                    <td><?php echo $data['jumlah_tersedia']; ?></td>
+
+                                    <td>
+                                        <?php echo htmlspecialchars($data['kondisi']); ?>
+                                    </td>
+
+                                    <td>
+                                        <div class="d-flex gap-2">
+
+                                            <a href="alat.php?edit=<?php echo $data['id']; ?>"
+                                               class="btn btn-warning btn-sm">
+                                                Edit
+                                            </a>
+
+                                            <a href="alat.php?hapus=<?php echo $data['id']; ?>"
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Yakin ingin menghapus alat ini?')">
+                                                Hapus
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            <?php } ?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
 </div>
 
-<div class="main">
-
-    <h1>Data Alat Laboratorium</h1>
-
-    <?php if (isset($_GET['pesan'])) { ?>
-        <div class="pesan">
-            <?php
-            if ($_GET['pesan'] == 'tambah') echo "Alat berhasil ditambahkan!";
-            if ($_GET['pesan'] == 'edit') echo "Data alat berhasil diperbarui!";
-            if ($_GET['pesan'] == 'hapus') echo "Alat berhasil dihapus!";
-            ?>
-        </div>
-    <?php } ?>
-
-    <?php if ($pesan != "") { ?>
-        <div class="pesan">
-            <?php echo htmlspecialchars($pesan); ?>
-        </div>
-    <?php } ?>
-
-    <div class="form-box">
-
-        <h2><?php echo $dataEdit ? "Edit Data Alat" : "Tambah Data Alat"; ?></h2>
-
-        <form method="POST">
-
-            <?php if ($dataEdit) { ?>
-                <input type="hidden" name="id"
-                    value="<?php echo $dataEdit['id']; ?>">
-            <?php } ?>
-
-            Kode Alat:
-            <input type="text" name="kode_alat" required
-                value="<?php echo htmlspecialchars($dataEdit['kode_alat'] ?? ''); ?>">
-
-            Nama Alat:
-            <input type="text" name="nama_alat" required
-                value="<?php echo htmlspecialchars($dataEdit['nama_alat'] ?? ''); ?>">
-
-            Kategori:
-            <select name="kategori_id" required>
-                <option value="">Pilih Kategori</option>
-
-                <?php
-                mysqli_data_seek($queryKategori, 0);
-                while ($kategori = mysqli_fetch_assoc($queryKategori)) {
-                ?>
-                    <option value="<?php echo $kategori['id']; ?>"
-                        <?php
-                        if ($dataEdit && $dataEdit['kategori_id'] == $kategori['id']) {
-                            echo "selected";
-                        }
-                        ?>>
-                        <?php echo htmlspecialchars($kategori['nama_kategori']); ?>
-                    </option>
-                <?php } ?>
-            </select>
-
-            Jumlah Total:
-            <input type="number" name="jumlah_total" min="0" required
-                value="<?php echo htmlspecialchars($dataEdit['jumlah_total'] ?? ''); ?>">
-
-            <?php if ($dataEdit) { ?>
-                Jumlah Tersedia:
-                <input type="number" name="jumlah_tersedia" min="0" required
-                    value="<?php echo $dataEdit['jumlah_tersedia']; ?>">
-            <?php } ?>
-
-            Kondisi:
-            <select name="kondisi" required>
-                <?php
-                $kondisiPilihan = ['Baik', 'Rusak Ringan', 'Rusak Berat'];
-
-                foreach ($kondisiPilihan as $kondisi) {
-                    $selected = ($dataEdit && $dataEdit['kondisi'] == $kondisi)
-                        ? 'selected' : '';
-                    echo "<option value='$kondisi' $selected>$kondisi</option>";
-                }
-                ?>
-            </select>
-
-            Keterangan:
-            <textarea name="keterangan" rows="3"><?php
-                echo htmlspecialchars($dataEdit['keterangan'] ?? '');
-            ?></textarea>
-
-            <?php if ($dataEdit) { ?>
-                <button type="submit" name="edit">Simpan Perubahan</button>
-                <a href="alat.php" class="cancel">Batal</a>
-            <?php } else { ?>
-                <button type="submit" name="tambah">Tambah Alat</button>
-            <?php } ?>
-
-        </form>
-
-    </div>
-
-    <div class="table-box">
-
-        <h2>Daftar Alat</h2>
-
-        <table>
-            <tr>
-                <th>No</th>
-                <th>Kode</th>
-                <th>Nama Alat</th>
-                <th>Kategori</th>
-                <th>Stok Total</th>
-                <th>Stok Tersedia</th>
-                <th>Kondisi</th>
-                <th>Aksi</th>
-            </tr>
-
-            <?php
-            $no = 1;
-
-            while ($data = mysqli_fetch_assoc($queryAlat)) {
-            ?>
-                <tr>
-                    <td><?php echo $no++; ?></td>
-                    <td><?php echo htmlspecialchars($data['kode_alat']); ?></td>
-                    <td><?php echo htmlspecialchars($data['nama_alat']); ?></td>
-                    <td><?php echo htmlspecialchars($data['nama_kategori'] ?? '-'); ?></td>
-                    <td><?php echo $data['jumlah_total']; ?></td>
-                    <td><?php echo $data['jumlah_tersedia']; ?></td>
-                    <td><?php echo htmlspecialchars($data['kondisi']); ?></td>
-
-                    <td class="aksi">
-                        <a href="alat.php?edit=<?php echo $data['id']; ?>">
-                            Edit
-                        </a>
-
-                        <a href="alat.php?hapus=<?php echo $data['id']; ?>"
-                           onclick="return confirm('Yakin ingin menghapus alat ini?')">
-                            Hapus
-                        </a>
-                    </td>
-                </tr>
-            <?php } ?>
-
-        </table>
-
-    </div>
-
-</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -39,156 +39,127 @@ $dataKembali = mysqli_fetch_assoc($queryKembali);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin - SIMALAB</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        body {
-            background: #f4f6f9;
-            display: flex;
-        }
-
-        .sidebar {
-            width: 230px;
-            min-height: 100vh;
-            background: #1e293b;
-            color: white;
-            padding: 25px 15px;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 13px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background: #334155;
-        }
-
-        .main {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .header {
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            margin-bottom: 8px;
-            color: #1e293b;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .card h3 {
-            color: #64748b;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            font-size: 30px;
-            font-weight: bold;
-            color: #1e293b;
-        }
-
-        @media (max-width: 900px) {
-            .cards {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            body {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                min-height: auto;
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <!-- CSS utama -->
+    <link rel="stylesheet" href="../style.css">
 </head>
 
-<body>
+<body class="bg-light">
 
-    <div class="sidebar">
-        <h2>SIMALAB</h2>
+    <div class="d-flex min-vh-100">
 
-        <a href="index.php" class="active">Dashboard</a>
-        <a href="alat.php">Data Alat</a>
-        <a href="peminjaman.php">Data Peminjaman</a>
-        <a href="pengembalian.php">Data Pengembalian</a>
-        <a href="laporan.php">Laporan</a>
-        <a href="profil.php">Profil</a>
-        <a href="../auth/logout.php"
-           onclick="return confirm('Yakin ingin keluar?')">Logout</a>
-    </div>
+        <!-- Sidebar -->
+        <div class="bg-dark text-white p-3 flex-shrink-0" style="width: 230px;">
 
-    <div class="main">
+            <h3 class="text-center mb-4">SIMALAB</h3>
 
-        <div class="header">
-            <h1>Dashboard Admin</h1>
-            <p>Selamat datang, <?php echo htmlspecialchars($_SESSION['nama_lengkap']); ?>!</p>
-            <p>Selamat mengelola Sistem Manajemen Alat Laboratorium.</p>
+            <div class="nav flex-column gap-2">
+
+                <a href="index.php" class="nav-link text-white bg-secondary rounded">
+                    Dashboard
+                </a>
+
+                <a href="alat.php" class="nav-link text-white">
+                    Data Alat
+                </a>
+
+                <a href="peminjaman.php" class="nav-link text-white">
+                    Data Peminjaman
+                </a>
+
+                <a href="pengembalian.php" class="nav-link text-white">
+                    Data Pengembalian
+                </a>
+
+                <a href="laporan.php" class="nav-link text-white">
+                    Laporan
+                </a>
+
+                <a href="profil.php" class="nav-link text-white">
+                    Profil
+                </a>
+
+                <a href="../auth/logout.php"
+                   class="nav-link text-white"
+                   onclick="return confirm('Yakin ingin keluar?')">
+                    Logout
+                </a>
+
+            </div>
         </div>
 
-        <div class="cards">
+        <!-- Konten Utama -->
+        <div class="flex-grow-1 p-4">
 
-            <div class="card">
-                <h3>Total Alat</h3>
-                <p><?php echo $dataAlat['total']; ?></p>
+            <div class="mb-4">
+                <h2 class="fw-bold">Dashboard Admin</h2>
+
+                <p class="text-muted mb-1">
+                    Selamat datang,
+                    <?php echo htmlspecialchars($_SESSION['nama_lengkap']); ?>!
+                </p>
+
+                <p class="text-muted">
+                    Selamat mengelola Sistem Manajemen Alat Laboratorium.
+                </p>
             </div>
 
-            <div class="card">
-                <h3>Total Peminjam</h3>
-                <p><?php echo $dataPeminjam['total']; ?></p>
-            </div>
+            <!-- Kartu Statistik -->
+            <div class="row g-4">
 
-            <div class="card">
-                <h3>Peminjaman Aktif</h3>
-                <p><?php echo $dataPinjam['total']; ?></p>
-            </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h6 class="text-muted">Total Alat</h6>
+                            <h2 class="fw-bold mb-0">
+                                <?php echo $dataAlat['total']; ?>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="card">
-                <h3>Sudah Dikembalikan</h3>
-                <p><?php echo $dataKembali['total']; ?></p>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h6 class="text-muted">Total Peminjam</h6>
+                            <h2 class="fw-bold mb-0">
+                                <?php echo $dataPeminjam['total']; ?>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h6 class="text-muted">Peminjaman Aktif</h6>
+                            <h2 class="fw-bold mb-0">
+                                <?php echo $dataPinjam['total']; ?>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h6 class="text-muted">Sudah Dikembalikan</h6>
+                            <h2 class="fw-bold mb-0">
+                                <?php echo $dataKembali['total']; ?>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
-
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -33,7 +33,6 @@ if (isset($_POST['simpan'])) {
             ");
             mysqli_stmt_bind_param($stmt, "i", $id);
             mysqli_stmt_execute($stmt);
-
             $hasil = mysqli_stmt_get_result($stmt);
             $data = mysqli_fetch_assoc($hasil);
 
@@ -53,7 +52,6 @@ if (isset($_POST['simpan'])) {
             ");
             mysqli_stmt_bind_param($stmt, "i", $id);
             mysqli_stmt_execute($stmt);
-
             $detail = mysqli_stmt_get_result($stmt);
 
             if (mysqli_num_rows($detail) == 0) {
@@ -70,10 +68,7 @@ if (isset($_POST['simpan'])) {
                 WHERE id = ?
             ");
 
-            mysqli_stmt_bind_param(
-                $stmt, "sssi",
-                $tanggal, $kondisi, $catatan, $id
-            );
+            mysqli_stmt_bind_param($stmt, "sssi", $tanggal, $kondisi, $catatan, $id);
 
             if (!mysqli_stmt_execute($stmt)) {
                 throw new Exception("Gagal menyimpan pengembalian!");
@@ -88,10 +83,7 @@ if (isset($_POST['simpan'])) {
                         WHERE id = ?
                     ");
 
-                    mysqli_stmt_bind_param(
-                        $stmtStok, "ii",
-                        $item['jumlah'], $item['alat_id']
-                    );
+                    mysqli_stmt_bind_param($stmtStok, "ii", $item['jumlah'], $item['alat_id']);
 
                     if (!mysqli_stmt_execute($stmtStok)) {
                         throw new Exception("Gagal memperbarui stok alat!");
@@ -100,7 +92,6 @@ if (isset($_POST['simpan'])) {
             }
 
             mysqli_commit($connect);
-
             header("Location: pengembalian.php?pesan=berhasil");
             exit;
 
@@ -111,7 +102,7 @@ if (isset($_POST['simpan'])) {
     }
 }
 
-// Ambil data untuk formulir jika Admin memilih proses pengembalian
+// Ambil data untuk formulir pengembalian
 $dataForm = null;
 
 if (isset($_GET['id'])) {
@@ -126,25 +117,18 @@ if (isset($_GET['id'])) {
 
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
-
     $hasil = mysqli_stmt_get_result($stmt);
     $dataForm = mysqli_fetch_assoc($hasil);
 }
 
 // Ambil daftar peminjaman yang belum dikembalikan
 $query = mysqli_query($connect, "
-    SELECT
-        peminjaman.*,
-        peminjam.nama,
-        alat.nama_alat,
-        detail_peminjaman.jumlah
+    SELECT peminjaman.*, peminjam.nama, alat.nama_alat,
+           detail_peminjaman.jumlah
     FROM peminjaman
-    JOIN peminjam
-        ON peminjaman.peminjam_id = peminjam.id
-    JOIN detail_peminjaman
-        ON peminjaman.id = detail_peminjaman.peminjaman_id
-    JOIN alat
-        ON detail_peminjaman.alat_id = alat.id
+    JOIN peminjam ON peminjaman.peminjam_id = peminjam.id
+    JOIN detail_peminjaman ON peminjaman.id = detail_peminjaman.peminjaman_id
+    JOIN alat ON detail_peminjaman.alat_id = alat.id
     WHERE peminjaman.status IN ('Dipinjam', 'Terlambat')
     ORDER BY peminjaman.id DESC
 ");
@@ -161,237 +145,171 @@ if (!$query) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengembalian - SIMALAB</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            margin: 0;
-            background: #f4f6f9;
-            display: flex;
-        }
-
-        .sidebar {
-            width: 230px;
-            min-height: 100vh;
-            background: #1e293b;
-            padding: 25px 15px;
-            color: white;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            text-decoration: none;
-            padding: 13px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background: #334155;
-        }
-
-        .main {
-            flex: 1;
-            padding: 30px;
-            min-width: 0;
-        }
-
-        .box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            background: #1e293b;
-            color: white;
-            border: none;
-            padding: 11px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #e2e8f0;
-        }
-
-        .pesan {
-            background: #e0f2fe;
-            padding: 12px;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 800px) {
-            body {
-                display: block;
-            }
-
-            .sidebar {
-                width: 100%;
-                min-height: auto;
-            }
-
-            .main {
-                overflow-x: auto;
-            }
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
-<body>
+<body class="bg-light">
 
-<div class="sidebar">
-    <h2>SIMALAB</h2>
+<div class="d-flex min-vh-100">
 
-    <a href="index.php">Dashboard</a>
-    <a href="alat.php">Data Alat</a>
-    <a href="peminjaman.php">Data Peminjaman</a>
-    <a href="pengembalian.php" class="active">Data Pengembalian</a>
-    <a href="laporan.php">Laporan</a>
-    <a href="profil.php">Profil</a>
-    <a href="../auth/logout.php">Logout</a>
-</div>
+    <!-- Sidebar -->
+    <aside class="bg-dark text-white p-3 flex-shrink-0" style="width: 230px;">
+        <h3 class="text-center mb-4">SIMALAB</h3>
 
-<div class="main">
+        <nav class="nav flex-column gap-2">
+            <a href="index.php" class="nav-link text-white">Dashboard</a>
+            <a href="alat.php" class="nav-link text-white">Data Alat</a>
+            <a href="peminjaman.php" class="nav-link text-white">Data Peminjaman</a>
+            <a href="pengembalian.php" class="nav-link text-white bg-secondary rounded">Data Pengembalian</a>
+            <a href="laporan.php" class="nav-link text-white">Laporan</a>
+            <a href="profil.php" class="nav-link text-white">Profil</a>
+            <a href="../auth/logout.php" class="nav-link text-white">Logout</a>
+        </nav>
+    </aside>
 
-    <h1>Data Pengembalian Alat</h1>
-    <p>Kelola pengembalian alat laboratorium.</p>
+    <!-- Konten Utama -->
+    <main class="flex-grow-1 p-4" style="min-width: 0;">
 
-    <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'berhasil') { ?>
-        <div class="pesan">
-            Pengembalian berhasil disimpan!
-        </div>
-    <?php } ?>
+        <h2 class="fw-bold mb-1">Data Pengembalian Alat</h2>
+        <p class="text-muted mb-4">Kelola pengembalian alat laboratorium.</p>
 
-    <?php if ($pesan != "") { ?>
-        <div class="pesan">
-            <?php echo htmlspecialchars($pesan); ?>
-        </div>
-    <?php } ?>
+        <!-- Notifikasi -->
+        <?php if (isset($_GET['pesan']) && $_GET['pesan'] == 'berhasil') { ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                Pengembalian berhasil disimpan!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php } ?>
 
-    <?php if (isset($_GET['id']) && $dataForm) { ?>
+        <?php if ($pesan != "") { ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <?php echo htmlspecialchars($pesan); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php } ?>
 
-        <div class="box">
+        <!-- Form Pengembalian -->
+        <?php if (isset($_GET['id']) && $dataForm) { ?>
 
-            <h2>Form Pengembalian</h2>
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="fw-bold mb-0">Form Pengembalian</h5>
+                </div>
 
-            <p>Kode Peminjaman:
-                <?php echo htmlspecialchars($dataForm['kode_pinjam']); ?>
-            </p>
+                <div class="card-body">
 
-            <p>Nama Peminjam:
-                <?php echo htmlspecialchars($dataForm['nama']); ?>
-            </p>
+                    <p>
+                        **Kode Peminjaman:**
+                        <?php echo htmlspecialchars($dataForm['kode_pinjam']); ?>
+                    </p>
 
-            <form method="POST">
+                    <p>
+                        **Nama Peminjam:**
+                        <?php echo htmlspecialchars($dataForm['nama']); ?>
+                    </p>
 
-                <input type="hidden" name="id"
-                    value="<?php echo $dataForm['id']; ?>">
+                    <form method="POST">
+                        <input type="hidden" name="id" value="<?php echo $dataForm['id']; ?>">
 
-                Tanggal Pengembalian:
-                <input type="date" name="tanggal_kembali_aktual" required>
+                        <div class="mb-3">
+                            <label class="form-label">Tanggal Pengembalian</label>
+                            <input type="date" name="tanggal_kembali_aktual"
+                                   class="form-control" required>
+                        </div>
 
-                Kondisi Alat:
-                <select name="kondisi_kembali" required>
-                    <option value="">Pilih Kondisi</option>
-                    <option value="Baik">Baik</option>
-                    <option value="Rusak Ringan">Rusak Ringan</option>
-                    <option value="Rusak Berat">Rusak Berat</option>
-                </select>
+                        <div class="mb-3">
+                            <label class="form-label">Kondisi Alat</label>
+                            <select name="kondisi_kembali" class="form-select" required>
+                                <option value="">Pilih Kondisi</option>
+                                <option value="Baik">Baik</option>
+                                <option value="Rusak Ringan">Rusak Ringan</option>
+                                <option value="Rusak Berat">Rusak Berat</option>
+                            </select>
+                        </div>
 
-                Catatan:
-                <textarea name="catatan" rows="3"></textarea>
+                        <div class="mb-3">
+                            <label class="form-label">Catatan</label>
+                            <textarea name="catatan" class="form-control" rows="3"></textarea>
+                        </div>
 
-                <button type="submit" name="simpan">
-                    Simpan Pengembalian
-                </button>
+                        <button type="submit" name="simpan" class="btn btn-primary">
+                            Simpan Pengembalian
+                        </button>
 
-                <a href="pengembalian.php">Batal</a>
-
-            </form>
-
-        </div>
-
-    <?php } elseif (isset($_GET['id'])) { ?>
-
-        <div class="pesan">Data peminjaman tidak ditemukan.</div>
-
-    <?php } ?>
-
-    <div class="box">
-
-        <h2>Daftar Alat yang Belum Dikembalikan</h2>
-
-        <table>
-            <tr>
-                <th>No</th>
-                <th>Kode Peminjaman</th>
-                <th>Nama Peminjam</th>
-                <th>Nama Alat</th>
-                <th>Jumlah</th>
-                <th>Rencana Pengembalian</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-
-            <?php
-            $no = 1;
-
-            while ($data = mysqli_fetch_assoc($query)) {
-            ?>
-                <tr>
-                    <td><?php echo $no++; ?></td>
-                    <td><?php echo htmlspecialchars($data['kode_pinjam']); ?></td>
-                    <td><?php echo htmlspecialchars($data['nama']); ?></td>
-                    <td><?php echo htmlspecialchars($data['nama_alat']); ?></td>
-                    <td><?php echo $data['jumlah']; ?></td>
-                    <td><?php echo $data['tanggal_kembali_rencana']; ?></td>
-                    <td><?php echo htmlspecialchars($data['status']); ?></td>
-                    <td>
-                        <a href="pengembalian.php?id=<?php echo $data['id']; ?>">
-                            Proses Pengembalian
+                        <a href="pengembalian.php" class="btn btn-secondary">
+                            Batal
                         </a>
-                    </td>
-                </tr>
-            <?php } ?>
+                    </form>
+                </div>
+            </div>
 
-        </table>
+        <?php } elseif (isset($_GET['id'])) { ?>
 
-    </div>
+            <div class="alert alert-danger">
+                Data peminjaman tidak ditemukan.
+            </div>
 
+        <?php } ?>
+
+        <!-- Daftar Peminjaman -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3">
+                <h5 class="fw-bold mb-0">Daftar Alat yang Belum Dikembalikan</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Kode Peminjaman</th>
+                                <th>Nama Peminjam</th>
+                                <th>Nama Alat</th>
+                                <th>Jumlah</th>
+                                <th>Rencana Pengembalian</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            while ($data = mysqli_fetch_assoc($query)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+                                    <td><?php echo htmlspecialchars($data['kode_pinjam']); ?></td>
+                                    <td><?php echo htmlspecialchars($data['nama']); ?></td>
+                                    <td><?php echo htmlspecialchars($data['nama_alat']); ?></td>
+                                    <td><?php echo $data['jumlah']; ?></td>
+                                    <td><?php echo $data['tanggal_kembali_rencana']; ?></td>
+                                    <td>
+                                        <span class="badge bg-<?php echo $data['status'] == 'Terlambat' ? 'danger' : 'warning text-dark'; ?>">
+                                            <?php echo htmlspecialchars($data['status']); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="pengembalian.php?id=<?php echo $data['id']; ?>"
+                                           class="btn btn-success btn-sm">
+                                            Proses Pengembalian
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
