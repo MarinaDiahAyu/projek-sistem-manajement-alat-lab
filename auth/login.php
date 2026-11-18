@@ -1,29 +1,21 @@
-
 <?php
 session_start();
 include '../config/koneksi.php';
 
 $error = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    // LOGIN ADMIN
-    $query = mysqli_prepare($connect,
-        "SELECT id, username, password, nama_lengkap
-         FROM admin WHERE username = ?"
-    );
+    $query = mysqli_prepare($connect, "SELECT id, username, password, nama_lengkap FROM admin WHERE username = ?");
 
     mysqli_stmt_bind_param($query, "s", $username);
     mysqli_stmt_execute($query);
     mysqli_stmt_bind_result($query, $id, $db_username, $db_password, $nama);
 
-    if (mysqli_stmt_fetch($query)) {
-
-        if (password_verify($password, $db_password) || $password === $db_password) {
-
+    if (mysqli_stmt_fetch($query)){
+        if (password_verify($password, $db_password) || $password === $db_password){
             session_regenerate_id(true);
 
             $_SESSION['admin_id'] = $id;
@@ -32,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = 'admin';
 
             mysqli_stmt_close($query);
-
             header("Location: ../admin/index.php");
             exit();
         }
@@ -40,20 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     mysqli_stmt_close($query);
 
-    // LOGIN USER
-    $query = mysqli_prepare($connect,
-        "SELECT id, nama, nim, password
-         FROM peminjam WHERE nim = ?"
-    );
+    $query = mysqli_prepare($connect, "SELECT id, nama, nim, password FROM peminjam WHERE nim = ?");
 
     mysqli_stmt_bind_param($query, "s", $username);
     mysqli_stmt_execute($query);
     mysqli_stmt_bind_result($query, $id, $nama, $nim, $db_password);
 
-    if (mysqli_stmt_fetch($query)) {
-
-        if (password_verify($password, $db_password)) {
-
+    if (mysqli_stmt_fetch($query)){
+        if (password_verify($password, $db_password)){
             session_regenerate_id(true);
 
             $_SESSION['peminjam_id'] = $id;
@@ -62,14 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = 'user';
 
             mysqli_stmt_close($query);
-
             header("Location: ../user/index.php");
             exit();
         }
     }
 
     mysqli_stmt_close($query);
-
     $error = "Username atau password salah.";
 }
 ?>
@@ -79,9 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMALAB - Login</title>
+    <title>login SIMALAB</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -205,38 +187,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="login-card">
     <div class="row g-0">
 
-        <!-- BAGIAN KIRI -->
         <div class="col-md-5">
             <div class="left-panel">
-
                 <div class="logo">🔬</div>
-
                 <h1>SIMALAB</h1>
-
-                <p class="mt-3">
-                    Sistem Manajemen Alat Laboratorium
-                </p>
-
-                <hr class="w-50 border-light">
-
-                <p class="small">
-                    Sistem informasi untuk membantu
-                    pengelolaan alat dan peminjaman
-                    laboratorium secara terorganisir.
-                </p>
-
+                <p class="mt-3">Sistem Manajemen Alat Laboratorium</p>
             </div>
         </div>
 
-        <!-- BAGIAN KANAN -->
         <div class="col-md-7">
             <div class="right-panel">
 
-                <h2>Selamat Datang!</h2>
-
-                <p class="text-secondary mb-4">
-                    Silakan masuk untuk melanjutkan.
-                </p>
+                <h2>Selamat Datang</h2>
+                <p class="text-secondary mb-4">Silakan masuk untuk melanjutkan.</p>
 
                 <?php if ($error != ""): ?>
                     <div class="alert alert-danger" role="alert">
@@ -248,26 +211,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <div class="mb-3">
                         <label class="form-label">Username / NIM</label>
-
                         <input
-                            type="text"
-                            name="username"
-                            class="form-control"
-                            placeholder="Masukkan username atau NIM"
-                            required
-                        >
+                            type="text" name="username" class="form-control" placeholder="Masukkan username atau NIM" required>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label">Password</label>
-
-                        <input
-                            type="password"
-                            name="password"
-                            class="form-control"
-                            placeholder="Masukkan password"
-                            required
-                        >
+                        <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
                     </div>
 
                     <button type="submit" class="btn btn-login w-100">
@@ -277,13 +227,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </form>
 
                 <div class="text-center mt-4">
-                    <span class="text-secondary">
-                        Belum punya akun?
-                    </span>
+                    <span class="text-secondary">Belum punya akun?</span>
 
-                    <a href="register.php" class="register-link">
-                        Daftar di sini
-                    </a>
+                    <a href="register.php" class="register-link">Daftar di sini</a>
                 </div>
 
             </div>

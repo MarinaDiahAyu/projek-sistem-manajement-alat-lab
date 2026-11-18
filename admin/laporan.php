@@ -61,7 +61,6 @@ if (!$query) {
     <main class="flex-grow-1 p-4" style="min-width: 0;">
 
         <h2 class="fw-bold">Laporan Peminjaman</h2>
-        <p class="text-muted">Laporan seluruh aktivitas peminjaman alat laboratorium.</p>
 
         <div class="card border-0 shadow-sm mt-4">
             <div class="card-body">

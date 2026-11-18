@@ -16,8 +16,7 @@ include '../config/koneksi.php';
 
 <main class="main-content">
 
-    <h1>Data Alat Laboratorium</h1>
-    <p>Daftar alat laboratorium yang tersedia.</p>
+    <h1>Data Alat Laboratorium yang Tersedia</h1>
 
     <table border="1" cellpadding="10" cellspacing="0" width="100%">
         <tr>
@@ -48,7 +47,6 @@ include '../config/koneksi.php';
         <?php } ?>
 
     </table>
-
 </main>
 
 </body>

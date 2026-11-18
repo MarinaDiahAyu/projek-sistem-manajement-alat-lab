@@ -1,16 +1,10 @@
-
 <?php
 include '../config/koneksi.php';
 
 $id = (int) $_GET['id'];
 $berhasil = false;
 
-$query = mysqli_query($connect, "
-    SELECT *
-    FROM peminjaman
-    WHERE id = '$id'
-    AND status IN ('Dipinjam', 'Terlambat')
-");
+$query = mysqli_query($connect, "SELECT * FROM peminjaman WHERE id = '$id' AND status IN ('Dipinjam', 'Terlambat')");
 
 $data = mysqli_fetch_array($query);
 

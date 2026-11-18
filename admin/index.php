@@ -95,15 +95,6 @@ $dataKembali = mysqli_fetch_assoc($queryKembali);
 
             <div class="mb-4">
                 <h2 class="fw-bold">Dashboard Admin</h2>
-
-                <p class="text-muted mb-1">
-                    Selamat datang,
-                    <?php echo htmlspecialchars($_SESSION['nama_lengkap']); ?>!
-                </p>
-
-                <p class="text-muted">
-                    Selamat mengelola Sistem Manajemen Alat Laboratorium.
-                </p>
             </div>
 
             <!-- Kartu Statistik -->

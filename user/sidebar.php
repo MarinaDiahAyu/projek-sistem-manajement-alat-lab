@@ -2,7 +2,7 @@
 <aside class="sidebar">
     <div class="sidebar-header">
         <h2>🔬 SIMALAB</h2>
-        <p>Lab Management</p>
+        <p>Manajemen Laboratorium</p>
     </div>
 
     <div class="navbar">

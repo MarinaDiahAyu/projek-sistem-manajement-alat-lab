@@ -36,8 +36,7 @@ if (!$query) {
 <?php include 'sidebar.php'; ?>
 
 <main class="main-content">
-    <h1>Pengembalian Alat</h1>
-    <p>Daftar alat yang masih dalam peminjaman.</p>
+    <h1>Daftar Alat yang Perlu Dikembalikan</h1>
 
     <table border="1" cellpadding="10" cellspacing="0" width="100%">
         <tr>

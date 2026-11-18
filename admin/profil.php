@@ -63,7 +63,6 @@ mysqli_stmt_close($query);
     <main class="flex-grow-1 p-4">
 
         <h2 class="fw-bold">Profil Admin</h2>
-        <p class="text-muted">Informasi akun Administrator SIMALAB.</p>
 
         <!-- Kartu Profil -->
         <div class="card border-0 shadow-sm mt-4 w-100">

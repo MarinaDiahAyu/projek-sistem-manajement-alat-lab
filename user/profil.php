@@ -1,21 +1,15 @@
-
 <?php
 session_start();
 include '../config/koneksi.php';
 
-// Cek login User
 if (!isset($_SESSION['peminjam_id'])) {
     header("Location: ../auth/login.php");
     exit();
 }
 
-// Ambil data User
 $id = $_SESSION['peminjam_id'];
 
-$query = mysqli_prepare($connect,
-    "SELECT nama, nim, kelas, no_hp
-     FROM peminjam WHERE id = ?"
-);
+$query = mysqli_prepare($connect, "SELECT nama, nim, kelas, no_hp FROM peminjam WHERE id = ?");
 
 mysqli_stmt_bind_param($query, "i", $id);
 mysqli_stmt_execute($query);
@@ -33,7 +27,7 @@ mysqli_stmt_close($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil User - SIMALAB</title>
+    <title>Profil User SIMALAB</title>
 
     <style>
         body {
@@ -113,7 +107,6 @@ mysqli_stmt_close($query);
     <div class="content">
 
         <h1>Profil Saya</h1>
-        <p>Informasi akun pengguna SIMALAB.</p>
 
         <div class="profile-box">
 

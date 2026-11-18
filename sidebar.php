@@ -13,7 +13,7 @@
             <div> <span class="logo-icon">🔬</span></div>
            <div>
                 <div>SIMALAB</div>
-                <div>Lab Management</div>
+                <div>Manajemen Laboratorium</div>
             </div> 
             <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">&#9776;</button>
         </div>

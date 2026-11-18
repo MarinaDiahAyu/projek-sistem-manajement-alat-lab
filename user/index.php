@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 ?>
@@ -9,22 +8,20 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard User SIMALAB</title>
-
+   
     <link rel="stylesheet" href="user.css">
 </head>
 <body>
 
     <?php include 'sidebar.php'; ?>
 
-    
 <main class="main-content">
 
     <div class="welcome">
-        <h1>Selamat Datang di SIMALAB!</h1>
-        <p>Kelola kebutuhan peminjaman alat laboratorium dengan mudah.</p>
+        <h1>Selamat Datang di SIMALAB</h1>
     </div>
 
-    <h2>Ringkasan Aktivitas</h2>
+    <h2>Aktivitas Sistem</h2>
 
     <div class="dashboard-cards">
 
@@ -42,10 +39,9 @@ session_start();
 
         <div class="card">
             <h3>Riwayat</h3>
-            <p>Pantau riwayat peminjaman alat kamu.</p>
+            <p>Lihat riwayat peminjaman kamu.</p>
             <a href="riwayat.php">Lihat Riwayat</a>
         </div>
-
     </div>
 
 </main>

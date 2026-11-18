@@ -33,7 +33,6 @@ $query = mysqli_query($connect, "
 <main class="main-content">
 
     <h1>Riwayat Peminjaman</h1>
-    <p>Daftar riwayat peminjaman alat laboratorium.</p>
 
     <table border="1" cellpadding="10" cellspacing="0" width="100%">
         <tr>
@@ -65,9 +64,7 @@ $query = mysqli_query($connect, "
         </tr>
 
         <?php } ?>
-
     </table>
-
 </main>
 
 </body>

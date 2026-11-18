@@ -25,46 +25,27 @@ if (isset($_POST['submit'])) {
 
         mysqli_begin_transaction($connect);
 
-        // Mengurangi stok jika stok masih mencukupi
-        $update = mysqli_query($connect, "
-            UPDATE alat
-            SET jumlah_tersedia = jumlah_tersedia - $jumlah
-            WHERE id = $alat_id
-            AND jumlah_tersedia >= $jumlah
-        ");
+        $update = mysqli_query($connect, " UPDATE alat SET jumlah_tersedia = jumlah_tersedia - $jumlah WHERE id = $alat_id AND jumlah_tersedia >= $jumlah");
 
         if ($update && mysqli_affected_rows($connect) > 0) {
 
-            // Menyimpan data peminjam
             $query1 = mysqli_query($connect, "
                 INSERT INTO peminjam (nama, nim, kelas, no_hp)
-                VALUES ('$nama', '$nim', '$kelas', '$no_hp')
-            ");
+                VALUES ('$nama', '$nim', '$kelas', '$no_hp')");
 
             if ($query1) {
 
                 $peminjam_id = mysqli_insert_id($connect);
                 $kode_pinjam = "PJM" . date("ymdHis");
 
-                // Menyimpan transaksi peminjaman
-                $query2 = mysqli_query($connect, "
-                    INSERT INTO peminjaman
-                    (kode_pinjam, peminjam_id, tanggal_pinjam, tanggal_kembali_rencana)
-                    VALUES
-                    ('$kode_pinjam', '$peminjam_id', '$tanggal_pinjam', '$tanggal_kembali')
-                ");
+                $query2 = mysqli_query($connect, "INSERT INTO peminjaman (kode_pinjam, peminjam_id, tanggal_pinjam, tanggal_kembali_rencana) VALUES ('$kode_pinjam', '$peminjam_id', '$tanggal_pinjam', '$tanggal_kembali')");
 
                 if ($query2) {
 
                     $peminjaman_id = mysqli_insert_id($connect);
 
-                    // Menyimpan detail alat
-                    $query3 = mysqli_query($connect, "
-                        INSERT INTO detail_peminjaman
-                        (peminjaman_id, alat_id, jumlah)
-                        VALUES
-                        ('$peminjaman_id', '$alat_id', '$jumlah')
-                    ");
+                    $query3 = mysqli_query($connect, "INSERT INTO detail_peminjaman (peminjaman_id, alat_id, jumlah) VALUES
+                        ('$peminjaman_id', '$alat_id', '$jumlah')");
 
                     if ($query3) {
                         mysqli_commit($connect);
