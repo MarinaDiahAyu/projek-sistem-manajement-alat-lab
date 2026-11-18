@@ -188,12 +188,12 @@ if (!$query) {
                 <div class="card-body">
 
                     <p>
-                        **Kode Peminjaman:**
+                        Kode Peminjaman:
                         <?php echo htmlspecialchars($dataForm['kode_pinjam']); ?>
                     </p>
 
                     <p>
-                        **Nama Peminjam:**
+                        Nama Peminjam:
                         <?php echo htmlspecialchars($dataForm['nama']); ?>
                     </p>
 

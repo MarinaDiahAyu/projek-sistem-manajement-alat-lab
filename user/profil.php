@@ -87,25 +87,9 @@ mysqli_stmt_close($query);
 
 <body>
 
-    <div class="sidebar">
-        <h2>🔬 SIMALAB</h2>
-        <p>Lab Management</p>
-        <hr>
-
-        <a href="index.php">Dashboard</a>
-        <a href="data_alat.php">Data Alat</a>
-        <a href="peminjaman.php">Ajukan Peminjaman</a>
-        <a href="riwayat.php">Riwayat Peminjaman</a>
-        <a href="pengembalian.php">Pengembalian</a>
-        <a href="profil.php">Profil</a>
-
-        <br><br><br>
-
-        <a href="../auth/logout.php">Logout</a>
-    </div>
+    <?php include 'sidebar.php'; ?>
 
     <div class="content">
-
         <h1>Profil Saya</h1>
 
         <div class="profile-box">
